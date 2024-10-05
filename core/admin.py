@@ -1,5 +1,14 @@
 from django.contrib import admin
 from .models import Programme, Course
 
-admin.site.register(Programme)
-admin.site.register(Course)
+
+class ProgrammeAdmin(admin.ModelAdmin):
+    list_display = ("name", "code", "description")
+
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ("name", "programme", "description")
+
+
+admin.site.register(Programme, ProgrammeAdmin)
+admin.site.register(Course, CourseAdmin)

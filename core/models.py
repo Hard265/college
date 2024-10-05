@@ -11,7 +11,9 @@ class Programme(models.Model):
 
 
 class Course(models.Model):
+    programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank=False,)
+    description = models.TextField(blank=True)
 
     def __str__(self) -> str:
         return self.name

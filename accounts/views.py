@@ -1,5 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import CollegeUserLoginForm as LoginForm
 
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            return redirect('/')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {form: 'login_form'})
