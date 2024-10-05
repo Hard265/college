@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-+awl&8sr(db!y@o$)@l*hz2=k(#+=ul2q%k@6p92wvsm_e1vsq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -130,3 +130,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.CollegeUser"
 
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+
+LOGIN_URL = '/login'

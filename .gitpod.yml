@@ -1,0 +1,7 @@
+
+tasks:
+  - init: pip install -r requirements.txt
+vscode:
+  extensions:
+    - ms-python.autopep8see https://www.gitpod.io/docs/introduction/learn-gitpod/gitpod-yaml)
+# and commit this file to your remote git repository to share the goodness with others.

@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block stylesheet %}
+{% extends 'base.html' %} {% load static %} {% block stylesheet %}
 <style>
   * {
     outline: none;
@@ -11,29 +8,28 @@
     background-image: url("{% static 'images/600x400.svg' %}");
   }
 </style>
-{% endblock stylesheet %}
-{% block title %}College | Login{% endblock title %}
-
-
+{% endblock stylesheet %} {% block title %}College | Login{% endblock title %}
 {% block content %}
-<div class="w-full m-0">
+<div id="app" class="w-full m-0">
   <div class="w-full min-h-[100vh] flex flex-wrap justify-center items-center bg-gray-50">
     <div class="w-full bg-white overflow-hidden flex flex-wrap items-stretch flex-row-reverse">
-      <div class="md:w-[560px] md:px-8 w-full md:p-14 md:pt-44 p-4 pt-20 min-h-[100vh] block bg-gray-50">
+      <div class="md:w-[560px] w-full md:p-14 md:px-16 md:pt-44 p-4 pt-20 min-h-[100vh] block bg-gray-50">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
           <!-- <img class="mx-auto h-10 w-auto" src="{% static 'images/mchs_logo.png' %}"
             alt="mchs logo"> -->
-          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login to continue</h2>
+          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Login to continue
+          </h2>
         </div>
         <form method="post" action="{% url 'login' %}" class="space-y-6 validate-form">
           {% csrf_token %}
 
           <div>
-            <label for="reg_number" class="block text-sm font-medium leading-6 text-gray-900">Registration
-              Number</label>
+            <span class="material-symbols-rounded">lock</span>
+            <label for="user_id" class="block text-sm font-medium leading-6 text-gray-900">User ID</label>
             <div class="mt-2">
-              <input id="reg_number" name="reg_number" type="text" required
-                class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+              <input v-model="user_id" id="user_id" name="user_id" type="text" required
+                class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
@@ -45,22 +41,38 @@
               </div>
             </div>
             <div class="mt-2">
-              <input id="password" name="password" type="password" autocomplete="current-password" required
-                class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+              <input v-model="password" id="password" name="password" type="password" autocomplete="current-password"
+                required
+                class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
           <div>
             <button type="submit"
-              class="flex w-full justify-center rounded-md bg-rose-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">Log
-              in</button>
+              class="flex w-full justify-center rounded-md bg-rose-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
+              Log in
+            </button>
           </div>
-
         </form>
       </div>
-      <div class="md:w-[calc(100%_-_560px)]  bg-no-repeat bg-cover relative bg-center z-1 none sm:block  sideimage">
-      </div>
+      <div class="md:w-[calc(100%_-_560px)] bg-no-repeat bg-cover relative bg-center z-1 none sm:block sideimage"></div>
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% block scripts %}
+<script type="module">
+  import { createApp, ref } from "vue";
+
+  createApp({
+    setup() {
+      const userID = ref("");
+      const password = ref("");
+
+      return {
+        user_id: userID,
+        password,
+      };
+    },
+  }).mount("#app");
+</script>
+{% endblock %}

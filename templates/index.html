@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}College | Home{% endblock title %}
+
+{% block content %}
+<div id="app">
+    <h1>Home</h1>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="module">
+    import { createApp, ref } from "vue";
+
+    createApp({
+        setup() {
+
+            return {};
+        },
+    }).mount("#app");
+</script>
+{% endblock scripts %}
