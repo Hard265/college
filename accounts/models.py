@@ -60,10 +60,11 @@ class Lecturer(models.Model):
 
 @receiver(post_save, sender=CollegeUser)
 def creat_user_profile(sender, instance: CollegeUser, created, **kwargs):
-    if created:
-        if instance.is_superuser:
-            pass
-        if not instance.is_superuser and instance.is_staff:
-            Lecturer.objects.create(user=instance)
-        if not instance.is_superuser and not instance.is_staff:
-            Student.objects.create(user=instance)
+    pass
+    # if created:
+    #     if instance.is_superuser:
+    #         pass
+    #     if not instance.is_superuser and instance.is_staff:
+    #         Lecturer.objects.create(user=instance)
+    #     if not instance.is_superuser and not instance.is_staff:
+    #         Student.objects.create(user=instance)

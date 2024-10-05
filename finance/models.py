@@ -20,5 +20,8 @@ class Payment(models.Model):
         max_digits=10, decimal_places=2, blank=False)
     payment_date = models.DateField(auto_now=True)
 
+    def name(self):
+        return f"{self.user.student_profile}"
+
     def __str__(self) -> str:
         return f"{self.user.student_profile.name} - {self.fee}"

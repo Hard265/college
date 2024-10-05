@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import CollegeUserLoginForm as LoginForm
+from django.contrib.auth import authenticate, login as auth_login
 
 
 def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            return redirect('/')
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {form: 'login_form'})
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        password = request.POST.get("password")
+        student = authenticate(user_id=user_id, password=password)
+
+        if student is not None:
+            auth_login(request, student)
+            return redirect("index")
+    return render(request, 'login.html')

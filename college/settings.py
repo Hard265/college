@@ -132,3 +132,7 @@ AUTH_USER_MODEL = "accounts.CollegeUser"
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 LOGIN_URL = '/login'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-hard265-college-h29w330v50e.ws-eu116.gitpod.io',
+]
