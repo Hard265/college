@@ -11,4 +11,6 @@ def index(request):
     if request.user.is_superuser:
         return redirect('/admin')
 
-    return render(request, 'index.html')
+    context = {"profile": request.user.student_profile}
+
+    return render(request, 'index.html', context=context)
