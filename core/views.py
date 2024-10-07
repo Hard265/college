@@ -14,3 +14,10 @@ def index(request):
     context = {"profile": request.user.student_profile}
 
     return render(request, 'index.html', context=context)
+
+
+def examination_results(request):
+    if not request.user.is_authenticated:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+
+    return render(request, 'examination-results.html')

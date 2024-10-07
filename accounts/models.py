@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
 from core.models import Programme, Course
 
 
@@ -26,7 +25,6 @@ class CollegeUserManager(BaseUserManager):
 
 class CollegeUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(max_length=50, unique=True)
-
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -42,11 +40,16 @@ class CollegeUser(AbstractBaseUser, PermissionsMixin):
 class Student(models.Model):
     user = models.OneToOneField(
         CollegeUser, on_delete=models.CASCADE, related_name='student_profile')
-    name = models.CharField(max_length=255, blank=False, null=True)
+    name = models.CharField(max_length=255, blank=False,
+                            null=True, verbose_name="Full Name")
+    email = models.EmailField(
+        max_length=255, blank=True, null=True, verbose_name="Email Address")
     programme = models.ForeignKey(
         Programme, on_delete=models.CASCADE, null=True, blank=True)
     courses = models.ManyToManyField(Course, max_length=12)
     date_of_birth = models.DateField(blank=False, null=True)
+    phone = models.CharField(max_length=12, blank=True,
+                             null=True, verbose_name="Phone Number")
 
     def __str__(self) -> str:
         return self.name or self.user.user_id
@@ -55,7 +58,10 @@ class Student(models.Model):
 class Lecturer(models.Model):
     user = models.OneToOneField(
         CollegeUser, on_delete=models.CASCADE, related_name='lecture_profile')
-    name = models.CharField(max_length=255, blank=False, null=True)
+    name = models.CharField(max_length=255, blank=False,
+                            null=True, verbose_name="Full Name")
+    email = models.EmailField(
+        max_length=255, blank=True, null=True, verbose_name="Email Address")
 
 
 @receiver(post_save, sender=CollegeUser)
