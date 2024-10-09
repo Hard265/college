@@ -1,19 +1,28 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}College | Home{% endblock title %}
 
 {% block content %}
 <div id="app">
     {% include './partials/sidebar.html' %}
     <main class="sm:pl-72">
+        <header class="flex flex-row justify-between items-center sm:hidden sticky top-0 bg-white shadow p-2">
+            <a href="/" class="flex items-center ps-2.5">
+                <img src="{% static 'images/mchs_logo.png' %}" class="h-10 w-10 " alt="">
+            </a>
+            <button @click="sidebarOpen=true">
+                <span class="text-3xl material-symbols-rounded">
+                    menu
+                </span>
+            </button>
+        </header>
         <div class="grid sm:grid-cols-2 gap-4 p-4">
             <div class="p-4 bg-gray-50 col-span-2 rounded-lg shadow">
                 <h3 class="text-2xl font-bold">{{profile.name}} ({{user.user_id|upper}})</h3>
                 {% if profile.email %}
                 <span class="text-gray-600 text-sm font-medium">{{profile.email}}</span>
                 {% else %}
-                <a href="#"
-                   class="text-blue-600 dark:text-blue-500 hover:underline">
+                <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">
                     Add your email address
                     <span class="text-sm material-symbols-rounded">
                         open_in_new
@@ -21,28 +30,26 @@
                 </a>
                 {% endif %}
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
-                    <div class="grid-rows-subgrid row-span-3 sm:grid-cols-subgrid sm:row-span-3">
-                        <img
-                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                             alt="user profile picture" class="rounded h-48 w-48 mx-auto" />
+                    <div class="grid-rows-subgrid row-span-2 md:row-span-4 sm:grid-cols-subgrid sm:row-span-3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt="user profile picture" class="rounded aspect-square mx-auto" />
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">Programme</h4>
+                        <h4 class="font-medium text-gray-600">Programme</h4>
                         <span class="text-lg font-medium">{{profile.programme}}</span>
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">Faculty</h4>
+                        <h4 class="font-medium text-gray-600">Faculty</h4>
                         <span class="text-lg font-medium">Health Sciences</span>
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">Lever</h4>
+                        <h4 class="font-medium text-gray-600">Lever</h4>
                         <span class="text-lg font-medium">Year 2</span>
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">Tuition</h4>
+                        <h4 class="font-medium text-gray-600">Tuition</h4>
                         <div class="mt-2">
-                            <span
-                                  class="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded">
+                            <span class="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded">
                                 pending
                             </span>
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Payment
@@ -54,12 +61,12 @@
                         </div>
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">School Registration status</h4>
+                        <h4 class="font-medium text-gray-600">School Registration status</h4>
                         <div class="mt-2">
                             <span
-                                  class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded">Closed</span>
+                                class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded">Closed</span>
                             <a href="#"
-                               class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Registration
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Registration
                                 history
                                 <span class="text-sm material-symbols-rounded">
                                     open_in_browser
@@ -68,7 +75,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col">
-                        <h4 class="font-medium text-gray-900">School Registration Progress</h4>
+                        <h4 class="font-medium text-gray-600">School Registration Progress</h4>
                         <div class="mt-3">
                             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
                                 <div class="bg-red-500 h-2 rounded-full" style="width: 45%"></div>
@@ -77,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="space-y-3 bg-gray-50  col-span-2 sm:col-span-1 shadow p-4 rounded-lg">
+            <div class="space-y-3 bg-gray-50 col-span-2 md:col-span-1 shadow p-4 rounded-lg">
                 <h3 class="text-xl font-semibold">Current Semester information</h3>
                 <div>
                     <h4 class="text-gray-600 ">Semester session</h4>
@@ -87,8 +94,7 @@
                     <h4 class="text-gray-600 ">Normal course registration end date</h4>
                     <div class="flex flex-row justify-start items-center gap-4">
                         <p class="font-medium">Wed Oct 23 2024 20:00</p>
-                        <span
-                              class="bg-red-100 text-red-800 text-sm me-2 px-2.5 py-0.5 rounded">Closed</span>
+                        <span class="bg-red-100 text-red-800 text-sm me-2 px-2.5 py-0.5 rounded">Closed</span>
                     </div>
                 </div>
                 <div>
@@ -98,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="space-y-3 bg-gray-50 col-span-2 sm:col-span-1  shadow p-4 rounded-lg">
+            <div class="space-y-3 bg-gray-50 col-span-2 md:col-span-1 shadow p-4 rounded-lg">
                 <h3 class="text-xl font-semibold flex flex-row justify-between items-center">
                     Your Semester Fee
                     <a href="">
@@ -113,7 +119,7 @@
                         <h4 class="text-gray-800 font-medium">{{payment.fee.name}}</h4>
                         <span>{{payment.payment_date}}</span>
                         <span
-                              class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Completed</span>
+                            class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Completed</span>
                     </li>
                     {% empty %}
                     <p class="text-center">No payment history</p>
@@ -123,4 +129,24 @@
         </div>
     </main>
 </div>
+<script type="module">
+    import { createApp, ref } from 'vue';
+
+    createApp({
+        setup() {
+            const sidebarOpen = ref(false);
+            const links = ref([
+                { name: "Home", href: "{% url 'index' %}", icon: 'home' },
+                { name: "Courses", href: "/courses/", icon: 'school' },
+                { name: "Examination results", href: "{% url 'examination_results' %}", icon: 'bar_chart' },
+                { name: "Payment history", href: "{% url 'payments' %}", icon: 'credit_card_clock' },
+                { name: "Results history", href: "/results", icon: 'work_history' },
+            ])
+            return {
+                sidebarOpen,
+                links
+            }
+        }
+    }).mount('#app')
+</script>
 {% endblock content %}

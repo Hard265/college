@@ -1,25 +1,33 @@
 {% load static %}
 
-<aside
-       role="navigation"
-       id="sidebar"
-       class="fixed shadow inset-y-0 left-0 z-10 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0"
-       aria-label="Sidebar">
+<aside role="navigation" id="sidebar" :data-opened="sidebarOpen"
+    class="fixed shadow inset-y-0 left-0 z-10 w-72 h-screen transition-transform before:transition-transform before:duration-300 -translate-x-full before:-translate-x-full data-[opened=true]:translate-x-0 data-[opened=true]:before:translate-x-0 sm:translate-x-0 sm:data-[opened=true]:before:-translate-x-full before:content-[''] before:bg-black/50 before:w-screen before:h-screen before:-z-10 before:absolute"
+    aria-label="Sidebar">
+    <div class=""></div>
     <div class="h-full px-3 py-4 flex flex-col overflow-y-auto bg-gray-50">
-        <a href="/" class="flex items-center ps-2.5 mb-5">
-            <img src="{% static 'images/mchs_logo.png' %}" class="h-12 w-12 " alt="">
-            <div class="flex flex-col items-start ml-4">
-                <span class="text-lg font-black whitespace-nowrap dark:text-white">Health Science</span>
-                <span class="font-semibold text-sm uppercase whitespace-nowrap dark:text-white">
-                    College of Malawi
+        <div class="flex flex-row justify-between items-center mb-5">
+            <a href="/" class="flex items-center ps-2.5">
+                <img src="{% static 'images/mchs_logo.png' %}" class="h-10 w-10 sm:h-12 sm:w-12" alt="">
+                <div class="flex flex-col items-start ml-4">
+                    <span class="text-lg font-black uppercase whitespace-nowrap">Health Science</span>
+                    <span class="font-semibold text-sm uppercase whitespace-nowrap">
+                        College of Malawi
+                    </span>
+                    <!-- -translate-x-full sm:translate-x-0 -->
+                </div>
+            </a>
+            <button class="text-rose-500" data-cy="sidebar-close" @click="sidebarOpen=false" role="button"
+                aria-roledescription="icon button">
+                <span class="text-3xl material-symbols-rounded">
+                    close
                 </span>
-            </div>
-        </a>
+            </button>
+        </div>
         <div class="justify-between flex flex-col flex-1 mt-8">
             <ul class="space-y-2 font-medium">
                 <li v-for="link in links" :key="link.name">
                     <a :href="link.href"
-                       :class="['flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group', '{{request.path}}' === link.href && 'bg-rose-500 text-rose-50 shadow-sm hover:bg-rose-400' ]">
+                        :class="['flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group', '{{request.path}}' === link.href && 'bg-rose-500 text-rose-50 shadow-sm hover:bg-rose-400' ]">
                         <span class="material-symbols-rounded" v-text="link.icon"></span>
                         <span class="ms-3" v-text="link.name"></span>
                     </a>
@@ -28,7 +36,7 @@
             <ul class="space-y-2 font-medium">
                 <li>
                     <button
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <span class="material-symbols-rounded">settings</span>
                         <span class="ms-3">Preferences</span>
                     </button>
@@ -37,9 +45,8 @@
                 <li>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button
-                                type="submit"
-                                class="flex w-full items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <button type="submit"
+                            class="flex w-full items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                             <span class="material-symbols-rounded">logout</span>
                             <span class="ms-3">Logout</span>
                         </button>
@@ -49,25 +56,3 @@
         </div>
     </div>
 </aside>
-
-{% block scripts %}
-<script type="module">
-    import { createApp, ref } from "vue";
-
-    createApp({
-        setup() {
-            const links = ref([
-                { name: "Home", href: "{% url 'index' %}", icon: 'home' },
-                { name: "Courses", href: "/courses/", icon: 'school' },
-                { name: "Examination results", href: "{% url 'examination_results' %}", icon: 'bar_chart' },
-                { name: "Payment history", href: "{% url 'payments' %}", icon: 'credit_card_clock' },
-                { name: "Results history", href: "/results", icon: 'work_history' },
-            ])
-
-            return {
-                links,
-            };
-        },
-    }).mount("#sidebar");
-</script>
-{% endblock scripts %}
