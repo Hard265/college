@@ -5,7 +5,34 @@
 {% block content %}
 <main class="sm:pl-72">
     {% include './partials/sidebar.html' %}
-    <h1>Examination</h1>
+    <div class="p-4">
+        <table class="border-collapse table-auto">
+            <thead>
+              <tr class="bg-blue-400 text-white">
+                <th>Course</th>
+                <th>Exam</th>
+                <th>Marks Obtained</th>
+                <th>Total Marks</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for result in results %}
+              <tr class="odd:bg-white even:bg-gray-100">
+                <td>{{ result.course.name }}</td>
+                <td>{{ result.exam.name }}</td>
+                <td>{{ result.marks_obtained }}</td>
+                <td>{{ result.total_marks }}</td>
+                <td>{{ result.percentage }}%</td>
+                <td>{{ result.grade }}</td>
+              </tr>
+              {% empty %}
+              <p>No results available</p>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
 </main>
 
 {% endblock content %}

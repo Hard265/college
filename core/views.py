@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from .models import Results
 
 # Create your views here.
 
@@ -20,4 +21,5 @@ def examination_results(request):
     if not request.user.is_authenticated:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
-    return render(request, 'examination-results.html')
+    results = Results.objects.filter(student=request.user)
+    return render(request, 'examination-results.html', {"results": results})
