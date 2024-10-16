@@ -18,4 +18,4 @@ class ExamAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'exam', 'marks_obtained', 'total_marks')
+    list_display = ('name', 'course', 'exam', 'percentage', 'marks_obtained', 'total_marks')

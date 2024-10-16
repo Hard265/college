@@ -5,7 +5,28 @@
 {% block content %}
 <main class="sm:pl-72">
     {% include './partials/sidebar.html' %}
-    <h1>Payment</h1>
+    <div>
+        <table class="table-auto border-collapse w-full">
+           <thead>
+                <tr class="bg-red-500 text-red-50 font-semibold">
+                    <td class="py-2.5">Fee</td>
+                    <td class="py-2.5">Amount</td>
+                    <td class="py-2.5">Date</td>
+                </tr>
+           </thead>
+           <tbody>
+                {% for payment in user.payments.all %}
+                <tr class="odd:bg-white even:bg-red-50">
+                  <td class="py-2.5 font-semibold">{{payment.fee.name}}</td>
+                  <td class="py-2.5">{{payment.formatted_amount}}</td>
+                  <td class="py-2.5">{{payment.payment_date}}</td>
+                </tr>  
+                {% endfor %}
+            </tr>
+           </tbody>
+        </table>
+
+    </div>
 </main>
 
 {% endblock content %}

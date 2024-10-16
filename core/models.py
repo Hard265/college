@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import CollegeUser
+from django.conf import settings
 
 
 class Programme(models.Model):
@@ -30,14 +30,17 @@ class Exam(models.Model):
 
 
 class Result(models.Model):
-    student = models.ForeignKey(CollegeUser, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
 
+    def name(self):
+        return f"{self.student.student_profile}"
+
     def percentage(self):
-        return (self.marks_obtained / self.total_marks) * 100
+        return round((self.marks_obtained / self.total_marks) * 100)
 
     def __str__(self):
         return f"{self.student} - {self.course} - {self.exam}"
