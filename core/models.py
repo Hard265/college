@@ -36,9 +36,12 @@ class Result(models.Model):
     marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
 
+    class Meta:
+        unique_together = ("student", "course", "exam")
+
     def name(self):
         return f"{self.student.student_profile}"
-
+        
     def percentage(self):
         return round((self.marks_obtained / self.total_marks) * 100)
 
