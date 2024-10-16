@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from django.conf import settings
-from .models import Result
 import csv
 import io
-
-# Create your views here.
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
+from .forms import CSVUploadForm
+from .models import Result, Student, Course, Exam
 
 
 def index(request):
@@ -27,12 +28,6 @@ def examination_results(request):
     return render(request, 'examination-results.html', {"results": results})
 
 
-import io
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
-from .forms import CSVUploadForm
-from .models import Result, Student, Subject, Exam
 
 @login_required
 @permission_required('core.add_result', raise_exception=True)
@@ -52,7 +47,7 @@ def upload_results(request):
                 try:
                     # Extract data from each row
                     student_reg = row['registration_number']
-                    subject_code = row['subject_code']
+                    course_code = row['course_code']
                     exam_name = row['exam_name']
                     exam_year = int(row['exam_year'])
                     exam_semester = int(row['exam_semester'])
@@ -61,7 +56,7 @@ def upload_results(request):
 
                     # Retrieve related objects
                     student = Student.objects.get(registration_number=student_reg)
-                    subject = Subject.objects.get(code=subject_code)
+                    course = Course.objects.get(code=subject_code)
                     exam, created = Exam.objects.get_or_create(
                         name=exam_name,
                         year=exam_year,
@@ -71,7 +66,7 @@ def upload_results(request):
                     # Create or update the Result
                     result, created = Result.objects.update_or_create(
                         student=student,
-                        subject=subject,
+                        course=course,
                         exam=exam,
                         defaults={
                             'marks_obtained': marks_obtained,
